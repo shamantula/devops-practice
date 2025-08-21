@@ -1,6 +1,6 @@
-provider "aws" {
-  region = "ap-south-1"  # change your region
-}
+#provider "aws" {
+#  region = "ap-south-1"  # change your region
+#}
 
 # IAM role for EKS cluster
 resource "aws_iam_role" "eks_cluster_role" {
@@ -82,13 +82,13 @@ resource "aws_eks_node_group" "node_group" {
 }
 
 # Get default VPC subnets
-data "aws_vpc" "default" {
-  default = true
-}
+#data "aws_vpc" "default" {
+ # default = true
+#}
 
-data "aws_subnets" "default" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-}
+#data "aws_subnets" "default" {
+ # filter {
+ #   name   = "vpc-id"
+ #   values = [data.aws_vpc.default.id]
+ # }
+#}
