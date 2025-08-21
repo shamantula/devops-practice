@@ -48,7 +48,7 @@ resource "aws_security_group" "ec2_sg" {
 
 # --- EC2 Instance ---
 resource "aws_instance" "my_ec2" {
-  ami           = "ami-0c2af51e265bd5e0f"   # Ubuntu 22.04 LTS (Mumbai region, change if needed)
+  ami           = "ami-020cba7c55df1f615"   # Ubuntu 22.04 LTS (Mumbai region, change if needed)
   instance_type = "t2.micro"
 
   subnet_id              = data.aws_subnets.default.ids[0]
