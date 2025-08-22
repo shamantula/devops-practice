@@ -78,7 +78,7 @@ resource "aws_eks_node_group" "node_group" {
     min_size     = 1
   }
 
-  instance_types = ["t3.medium"]  # free-tier t2.micro not supported in managed node groups
+  instance_types = ["t3.micro"]  # free-tier t2.micro not supported in managed node groups
 }
 
 # Get default VPC subnets
