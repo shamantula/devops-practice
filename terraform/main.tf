@@ -4,7 +4,7 @@ provider "aws" {
 }
 resource "aws_key_pair" "my_key" {
   key_name   = "my-terraform-key"         # name shown in AWS console
-  public_key = file("~/.ssh/id_rsa.pub")  # path to your existing public key
+  public_key = file("~/.ssh/id_ed25519.pub")  # path to your existing public key
 }
 # --- get default VPC ---
 data "aws_vpc" "default" {
