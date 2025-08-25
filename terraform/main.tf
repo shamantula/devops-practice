@@ -2,7 +2,10 @@
 provider "aws" {
   region = "ap-south-1"   # change to your region
 }
-
+resource "aws_key_pair" "my_key" {
+  key_name   = "my-terraform-key"         # name shown in AWS console
+  public_key = file("~/.ssh/id_rsa.pub")  # path to your existing public key
+}
 # --- get default VPC ---
 data "aws_vpc" "default" {
   default = true
@@ -55,7 +58,7 @@ resource "aws_instance" "my_ec2" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   count = 3   # <-- This creates 3 EC2 instances
-
+key_name = aws_key_pair.my_key.key_name # use the key pair created above
   tags = {
     Name = "web-${count.index + 1}" # web-1, web-2, web-3
   }
