@@ -54,7 +54,9 @@ resource "aws_instance" "my_ec2" {
   subnet_id              = data.aws_subnets.default.ids[0]
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
+  count = 3   # <-- This creates 3 EC2 instances
+
   tags = {
-    Name = "MyTerraformEC2"
+    Name = "web-${count.index + 1}" # web-1, web-2, web-3
   }
 }
