@@ -11,19 +11,19 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# --- get default subnet(s) ---
-#data "aws_subnets" "default" {
-  #filter {
-   # name   = "vpc-id"
-   # values = [data.aws_vpc.default.id]
-  #}
-#}
+ #--- get default subnet(s) ---
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
 
 # --- security group (allow SSH + HTTP) ---
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-sg"
   description = "Allow SSH and HTTP"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = subnet-0fc1a306d66f5c7cd
 
   ingress {
     description = "SSH"
@@ -54,7 +54,7 @@ resource "aws_instance" "my_ec2" {
   ami           = "ami-0f918f7e67a3323f0"   # Ubuntu 22.04 LTS (Mumbai region, change if needed)
   instance_type = "t3.micro"
 
-  subnet_id              = subnet-0fc1a306d66f5c7cd
+  subnet_id              = data.aws_subnets.default.ids[0]
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   count = 1   # <-- This creates 3 EC2 instances
