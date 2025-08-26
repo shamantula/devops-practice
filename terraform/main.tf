@@ -12,7 +12,12 @@ data "aws_vpc" "default" {
 }
 
  #--- get default subnet(s) ---
-data "aws_subnets" "default" {
+data "aws_subnet" "selected" {
+  filter {
+    name   = "cidrBlock"
+    values = ["172.31.255.0/24"] # replace with your subnet CIDR
+  }
+
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
@@ -54,7 +59,7 @@ resource "aws_instance" "my_ec2" {
   ami           = "ami-0f918f7e67a3323f0"   # Ubuntu 22.04 LTS (Mumbai region, change if needed)
   instance_type = "t3.micro"
 
-  subnet_id              = data.aws_subnets.default.ids[0]
+  subnet_id              = data.aws_subnet.selected.id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   count = 1   # <-- This creates 3 EC2 instances
