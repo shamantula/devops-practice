@@ -28,7 +28,7 @@ data "aws_subnet" "selected" {
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-sg"
   description = "Allow SSH and HTTP"
-  vpc_id      = subnet-0fc1a306d66f5c7cd
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     description = "SSH"
